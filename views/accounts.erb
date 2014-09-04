@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Basic HTML Page</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+
+  <body>
+    <div><h1>Accounts:</a></h1></div>
+    <ul><%@accounts.each do |name, account| %>
+      <li><a href="/accounts/<%=name.gsub(' ', '+')%>"><%=name%></a></li>
+    <%end%></ul>
+  </body>
+</html>
