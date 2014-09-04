@@ -4,7 +4,7 @@ require 'pry'
 
 class Account
 
-  attr_reader :account_name, :starting_balance, :current_balance
+  attr_reader :account_name, :starting_balance, :current_balance, :transactions
 
   def initialize(account_name)
     @account_name = account_name
@@ -30,16 +30,11 @@ class Account
 
   end
 
-  private
-
-  attr_reader :transactions
-
   def load_balance
     CSV.foreach('balances.csv', headers: true, :header_converters => :symbol, :converters => :all) do |row|
       if row[:account] == account_name
         return row[:balance]
       end
-        # binding.pry
     end
     puts "account not found"
     nil

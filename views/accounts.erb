@@ -6,9 +6,13 @@
   </head>
 
   <body>
-    <div><h1>Accounts:</a></h1></div>
-    <ul><%@accounts.each do |name, account| %>
-      <li><a href="/accounts/<%=name.gsub(' ', '+')%>"><%=name%></a></li>
-    <%end%></ul>
+    <div><h1>Accounts:</h1></div>
+    <table><tr><td>Account name</td><td>Starting balance</td><td>Current balance</td></tr>
+      <%@accounts.each do |name, account| %>
+        <tr><td><a href="/accounts/<%=name.gsub(' ', '+')%>"><%=name%></a></td>
+        <td style="text-align: right">$<%=sprintf("%.2f", account.starting_balance)%><%=%></td>
+        <td style="text-align: right">$<%=sprintf("%.2f", account.current_balance)%><%=%></td></tr>
+      <%end%>
+    </table>
   </body>
 </html>

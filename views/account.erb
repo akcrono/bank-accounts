@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Basic HTML Page</title>
+  </head>
+
+  <body>
+    <div><h1>Accounts:</h1></div>
+    <table><tr><td>Description</td><td>Amount</td><td>Type</td><td>Date</td>
+      <%@account.transactions.each do |transaction| %>
+        <tr><td><%=transaction.source%></td>
+        <td style="text-align: right">$<%=sprintf("%.2f", transaction.amount.abs)%></td>
+        <td style="text-align: right"><%=transaction.deposit? ? "DEPOSIT" : "WITHDRAWAL"%></td>
+        <td style="text-align: right"><%=transaction.date%></td></tr>
+      <%end%>
+    </table>
+  </body>
+</html>
