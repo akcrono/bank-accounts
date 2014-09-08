@@ -3,7 +3,6 @@ require 'csv'
 require 'pry'
 
 class Account
-
   attr_reader :account_name, :starting_balance, :current_balance, :transactions
 
   def initialize(account_name)
@@ -27,14 +26,11 @@ class Account
     puts "Ending Balance:   $#{sprintf("%.2f", current_balance)}\n\n"
     puts summary
     puts "========\n\n"
-
   end
 
   def load_balance
-    CSV.foreach('balances.csv', headers: true, :header_converters => :symbol, :converters => :all) do |row|
-      if row[:account] == account_name
-        return row[:balance]
-      end
+    CSV.foreach("balances.csv", headers: true, header_converters: :symbol, :converters => :all) do |row|
+      return row[:balance] if row[:account] == account_name
     end
     puts "account not found"
     nil
@@ -42,15 +38,16 @@ class Account
 
   def load_transactions
     loaded_transactions = []
-    CSV.foreach('bank_data.csv', headers: true, :header_converters => :symbol, :converters => :all) do |row|
+    CSV.foreach("bank_data.csv", headers: true, header_converters: :symbol, :converters => :all) do |row|
       if row[:account] == account_name
-        loaded_transactions << Transaction.new(row[:amount],row[:description], row[:date])
+        loaded_transactions << Transaction.new(row[:amount], row[:description], row[:date])
       end
     end
     loaded_transactions
   end
 
   def calculate_current_balance
+
     balance = starting_balance
     transactions.each do |transaction|
       balance += transaction.amount

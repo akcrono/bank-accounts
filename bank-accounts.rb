@@ -3,18 +3,15 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pry'
 
-
-
-def get_accounts
+def fetch_accounts
   accounts = {}
   accounts['business checking'] = Account.new('Business Checking')
   accounts['purchasing account'] = Account.new('Purchasing Account')
   accounts
 end
 
-def get_account account_name
-  temp = Account.new(account_name)
-  return temp
+def fetch_account(account_name)
+  Account.new(account_name)
 end
 
 get '/' do
@@ -23,14 +20,13 @@ end
 
 get '/accounts' do
 
-  @accounts = get_accounts
+  @accounts = fetch_accounts
 
   erb :accounts
 end
 
 get '/accounts/:account_name' do
   @account_name = params[:account_name].split('+').map(&:capitalize).join(' ')
-  @account = get_account(@account_name)
-  # binding.pry
+  @account = fetch_account(@account_name)
   erb :account
 end
